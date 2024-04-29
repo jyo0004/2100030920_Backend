@@ -1,0 +1,38 @@
+import mysql.connector
+
+# Connect to the MySQL database
+conn = mysql.connector.connect(
+    host='localhost',
+    user='springstudent',
+    password='springstudent',
+    database='sqlconnect'
+)
+
+# Check if the connection is successful
+if conn.is_connected():
+    print('Connected to MySQL database')
+
+    # Create cursor object
+    cursor = conn.cursor()
+
+    # Define the query
+    query = """
+    SELECT location_id, street_address, city, state_province, 'Canada' AS country_name
+    FROM locations
+    WHERE country_id = 'CA'
+    """
+
+    # Execute the query
+    cursor.execute(query)
+
+    # Fetch the results
+    result = cursor.fetchall()
+    for row in result:
+        print(row)
+
+    # Close cursor and connection
+    cursor.close()
+    conn.close()
+    print('Connection closed.')
+else:
+    print('Failed to connect to MySQL database')
